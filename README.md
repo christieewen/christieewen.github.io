@@ -6,4 +6,4 @@ Check out his slides http://slides.com/matthewstrom/tinycharts#/13
 
 Slide 13 shows miniature graphs using real data rather than numbers.
 
-This is a quick start demo showing a graph of the trend in cost of genome sequencing.
+For this example, the illustration is in seeing a trend in the cost of genome sequencing.
