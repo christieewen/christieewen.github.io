@@ -1,0 +1,69 @@
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>D3.js Sparkline</title>
+  <style>
+    .sparkline {
+    fill: none;
+    stroke: #000;
+    stroke-width: 0.5px;
+  }
+  .sparkcircle {
+    fill: #f00;
+    stroke: none;
+  }
+  </style>
+</head>
+
+<body>
+<div id="container">
+    <!-- This element's contents will be replaced with your component. -->
+</div>
+<script src="http://d3js.org/d3.v3.min.js"></script>
+ <script type="text/javascript">
+var width = 100;
+var height = 25;
+var x = d3.scale.linear().range([0, width - 2]);
+var y = d3.scale.linear().range([height - 4, 0]);
+
+var parseDate = d3.time.format("%Y-%m").parse;
+var line = d3.svg.line()
+             .interpolate("basis")
+             .x(function(d) { return x(d.date); })
+             .y(function(d) { return y(d.costPerGenome); });
+
+function sparkline(elemId, data) {
+  data.forEach(function(d) {
+    d.date = parseDate(d.Date);
+    d.costPerMb = +d.CostPerMb;
+    d.costPerGenome = +d.CostPerGenome;
+  });
+  x.domain(d3.extent(data, function(d) { return d.date; }));
+  y.domain(d3.extent(data, function(d) { return d.costPerGenome; }));
+
+  var svg = d3.select(elemId)
+  .style('color', 'red')
+              .append('svg')
+              .attr('width', width)
+              .attr('height', height)
+              .append('g')
+              .attr('transform', 'translate(0, 2)');
+  svg.append('path')
+     .datum(data)
+     .attr('class', 'sparkline')
+     .attr('d', line);
+  svg.append('circle')
+     .attr('class', 'sparkcircle')
+     .attr('cx', x(data[0].date))
+     .attr('cy', y(data[0].costPerGenome))
+     .attr('r', 1.5);
+}
+
+d3.csv('sequencing_costs.csv', function(error, data) {
+  console.log(data[0]);
+  console.log(data[1]);
+  sparkline('#container', data);
+});
+</script>
+</body>
+</html>
