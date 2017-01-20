@@ -3,6 +3,7 @@ Demo
 
 For this example, the illustration is in seeing a trend in the cost of genome sequencing.  The data is from https://github.com/datasets/genome-sequencing-costs
 
+You can view this graph on https://christieewen.github.io/
 
 Bibliography
 ============
